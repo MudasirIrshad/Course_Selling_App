@@ -1,6 +1,12 @@
 import mongoose from "mongoose";
-
-export const ROUTE_URL = `http://localhost/`;
+import { z } from "zod";
+export const AdminZodSchema = z
+  .object({
+    adminname: z.string().max(20).min(3),
+    gmail: z.string().min(15).max(50),
+    password: z.string().min(8).max(20),
+  })
+  .strict();
 
 export async function connectDatabase() {
   let DB_URL =
