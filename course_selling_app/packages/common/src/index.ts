@@ -8,6 +8,16 @@ export const AdminZodSchema = z
   })
   .strict();
 
+export const CourseZodSchema = z
+  .object({
+    title: z.string().max(30),
+    description: z.string().max(100),
+    price: z.number(),
+    imageLink: z.string(),
+    published: z.boolean(),
+  })
+  .strict();
+
 export async function connectDatabase() {
   let DB_URL =
     "mongodb+srv://mudasirirshad47:mudasir123456789@cluster0.jzcnrjw.mongodb.net/Course_Selling_App";
