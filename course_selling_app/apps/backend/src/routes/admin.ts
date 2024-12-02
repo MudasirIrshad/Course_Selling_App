@@ -9,6 +9,8 @@ const router = express.Router();
 
 router.post("/signup", async (req, res) => {
   const inputs = AdminZodSchema.safeParse(req.body);
+  if(inputs.error) res.send({message: inputs.error})
+  
   if (!inputs.success) res.send("issue in input data");
   let adminname = inputs.data?.adminname;
   let gmail = inputs.data?.gmail;
@@ -31,6 +33,7 @@ router.post("/login", async (req, res) => {
   const inputs = AdminZodSchema.safeParse(req.body);
   console.log(inputs);
 
+  if(inputs.error) res.send({message: inputs.error})
   if (!inputs.success) res.send("issue in input data");
   let adminname = inputs.data?.adminname;
   let gmail = inputs.data?.gmail;
@@ -51,6 +54,8 @@ router.get("/", async (req, res) => {
 
 router.post("/addCourse", auth, async (req, res) => {
   const inputs = CourseZodSchema.safeParse(req.body);
+  
+  if(inputs.error) res.send({message: inputs.error})
   if (!inputs.success) res.send("Input validation error");
   let title = inputs.data?.title;
   let description = inputs.data?.description;
@@ -72,4 +77,14 @@ router.post("/addCourse", auth, async (req, res) => {
     res.send("Course added succefully");
   }
 });
+router.get("/viewAllCourses", auth, async (req, res) => {
+  let find = await Course.find();
+  if (!find) res.send("No course available");
+  else {
+    res.send({ courses: find });
+  }
+});
+router.put('/editCourse',auth, async(req,res)=>{
+  
+})
 export = router;
