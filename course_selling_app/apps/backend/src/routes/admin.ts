@@ -9,8 +9,8 @@ const router = express.Router();
 
 router.post("/signup", async (req, res) => {
   const inputs = AdminZodSchema.safeParse(req.body);
-  if(inputs.error) res.send({message: inputs.error})
-  
+  if (inputs.error) res.send({ message: inputs.error });
+
   if (!inputs.success) res.send("issue in input data");
   let adminname = inputs.data?.adminname;
   let gmail = inputs.data?.gmail;
@@ -33,7 +33,7 @@ router.post("/login", async (req, res) => {
   const inputs = AdminZodSchema.safeParse(req.body);
   console.log(inputs);
 
-  if(inputs.error) res.send({message: inputs.error})
+  if (inputs.error) res.send({ message: inputs.error });
   if (!inputs.success) res.send("issue in input data");
   let adminname = inputs.data?.adminname;
   let gmail = inputs.data?.gmail;
@@ -54,8 +54,8 @@ router.get("/", async (req, res) => {
 
 router.post("/addCourse", auth, async (req, res) => {
   const inputs = CourseZodSchema.safeParse(req.body);
-  
-  if(inputs.error) res.send({message: inputs.error})
+
+  if (inputs.error) res.send({ message: inputs.error });
   if (!inputs.success) res.send("Input validation error");
   let title = inputs.data?.title;
   let description = inputs.data?.description;
@@ -84,7 +84,20 @@ router.get("/viewAllCourses", auth, async (req, res) => {
     res.send({ courses: find });
   }
 });
-router.put('/editCourse',auth, async(req,res)=>{
-  
-})
+router.put("/editCourse/:courseId", auth, async (req, res) => {
+  const courseId = req.params.courseId;
+  console.log(courseId);
+
+  const find = await Course.findByIdAndUpdate(courseId, req.body);
+  if (find) res.send({ message: "Done" });
+  else res.send("error");
+});
+router.delete("/deleteCourse/:courseId", auth, async (req, res) => {
+  const courseId = req.params.courseId;
+  console.log(courseId);
+
+  const find = await Course.findByIdAndDelete(courseId);
+  if (find) res.send({ message: "Done" });
+  else res.send("error");
+});
 export = router;
