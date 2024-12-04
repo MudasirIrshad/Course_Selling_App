@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
 // Define mongoose schemas
 const userSchema = new mongoose.Schema({
-  username: { type: String },
+  username:String,
+  gmail:String,
   password: String,
   purchasedCourses: [{ type: mongoose.Schema.Types.ObjectId, ref: "Course" }],
 });

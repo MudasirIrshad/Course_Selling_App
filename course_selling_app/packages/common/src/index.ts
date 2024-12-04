@@ -1,8 +1,17 @@
 import mongoose from "mongoose";
 import { z } from "zod";
+
 export const AdminZodSchema = z
   .object({
     adminname: z.string().max(20),
+    gmail: z.string().max(50),
+    password: z.string().max(20),
+  })
+  .strict();
+
+  export const UserZodSchema = z
+  .object({
+    username: z.string().max(20),
     gmail: z.string().max(50),
     password: z.string().max(20),
   })

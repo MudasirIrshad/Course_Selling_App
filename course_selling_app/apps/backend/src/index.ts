@@ -2,6 +2,7 @@ import express from "express";
 import { connectDatabase } from "@repo/common/config";
 import adminRouter from './routes/admin'
 import bodyParser from "body-parser";
+import userRouter from './routes/user'
 
 connectDatabase();
 const app = express();
@@ -12,3 +13,4 @@ app.listen(port, () => {
 });
 
 app.use('/admin',adminRouter)
+app.use('/user',userRouter)
