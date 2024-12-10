@@ -4,7 +4,6 @@ import * as jwt from "jsonwebtoken";
 import { SECRET_KEY } from "../middleware/index";
 import { UserZodSchema } from "@repo/common/config";
 import { auth } from "../middleware/index";
-import { CourseZodSchema } from "@repo/common/config";
 
 const router = express.Router();
 
@@ -55,13 +54,12 @@ router.post("/purchaseCourse/:courseId", auth, async (req, res) => {
   const courseId = req.params.courseId;
   const course = await Course.findById(courseId);
   let username = req.user.username;
-  console.log(username);
 
   if (course) {
     const user = await User.findOne({ username });
     if (user) {
       user.purchasedCourses.push(course);
-      user.save()
+      user.save();
       res.send("Course Successfully purchased");
     } else res.status(403).send("user not found");
   } else res.send("course not found");
@@ -70,10 +68,9 @@ router.get("/purchasedCourses", auth, async (req, res) => {
   const find = await User.findOne({ username: req.user.username }).populate(
     "purchasedCourses"
   );
-  if(find){
-    res.send({purchasedCourses:find.purchasedCourses})
-  }
-  else res.send('no course found')
+  if (find) {
+    res.send({ purchasedCourses: find.purchasedCourses });
+  } else res.send("no course found");
 });
 
 export = router;
