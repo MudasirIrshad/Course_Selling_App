@@ -1,9 +1,10 @@
+import Appbar from "./components/Appbar";
 
 function App() {
 
   return (<>
   <div>
-    hello
+    <Appbar/>
   </div>
   </>);
 }

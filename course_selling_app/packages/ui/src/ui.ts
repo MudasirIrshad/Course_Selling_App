@@ -1,1 +1,1 @@
-export { default as Great } from "./great";
+export const BASE_URL = "http://localhost:3000";

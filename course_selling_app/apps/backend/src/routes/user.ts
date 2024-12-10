@@ -44,7 +44,7 @@ router.post("/login", async (req, res) => {
   } else res.send("Please Signin first. thankyou");
 });
 
-router.get("/courses", auth, async (req, res) => {
+router.get("/courses", async (req, res) => {
   const find = await Course.find({ published: true });
   if (!find) res.send("No course available");
   else res.send({ courses: find });
