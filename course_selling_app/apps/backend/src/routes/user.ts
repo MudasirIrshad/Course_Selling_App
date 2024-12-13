@@ -4,7 +4,9 @@ import * as jwt from "jsonwebtoken";
 import { SECRET_KEY } from "../middleware/index";
 import { UserZodSchema } from "@repo/common/config";
 import { auth } from "../middleware/index";
-
+import cors  from "cors";
+const app = express()
+app.use(cors())
 const router = express.Router();
 
 router.post("/signup", async (req, res) => {
