@@ -9,9 +9,11 @@ import {
   CardContent,
   Typography,
   Button,
+  Alert,
 } from "@mui/material";
 export default function Home() {
   const [courses, setCourses] = useState([]);
+  const [alert, setAlert] = useState(false);
   useEffect(() => {
     axios
       .get(`${BASE_URL}/user/courses`)
@@ -23,9 +25,14 @@ export default function Home() {
       .catch((err) => console.log("err"));
   }, []);
   console.log(courses.map((course) => course._id));
-
+  const handleClick = () => {
+    setAlert(true);
+  };
+  setTimeout(() => {
+    setAlert(false);
+  }, 4000);
   return (
-    <div >
+    <div>
       <Grid container spacing={2} sx={{ padding: 2 }}>
         {courses.map((course) => (
           <Grid item xs={12} sm={6} md={4} key={course.id}>
@@ -51,12 +58,25 @@ export default function Home() {
                   >
                     {course.price}
                   </Typography>
-                  <Button variant="contained" style={{backgroundColor:"black", color:"white"}}>Buy</Button>
+                  <Button
+                    onClick={handleClick}
+                    variant="contained"
+                    style={{ backgroundColor: "black", color: "white" }}
+                  >
+                    Buy
+                  </Button>
                 </CardContent>
               </CardActionArea>
             </Card>
           </Grid>
         ))}
+        {alert ? (
+          <Alert style={{ margin: "20px" }} variant="outlined" severity="error">
+            PLEASE SIGNIN OR LOGIN TO BUY THIS COURSE. THANKYOU
+          </Alert>
+        ) : (
+          <></>
+        )}
       </Grid>
     </div>
   );
