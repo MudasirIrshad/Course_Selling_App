@@ -12,8 +12,10 @@ import {
   Alert,
 } from "@mui/material";
 export default function Home() {
+  const [buy, setBuy] = useState(false);
   const [courses, setCourses] = useState([]);
   const [alert, setAlert] = useState(false);
+
   useEffect(() => {
     axios
       .get(`${BASE_URL}/user/courses`)
@@ -26,8 +28,6 @@ export default function Home() {
   }, []);
 
   async function handleClick(courseId) {
-    console.log(localStorage.getItem('Token'));
-    
     if (!localStorage.getItem("Token")) {
       setAlert(true);
     }
@@ -43,12 +43,16 @@ export default function Home() {
         }
       )
       .then((res) => {
+        setBuy(true);
         console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
   }
+  setTimeout(() => {
+    setBuy(false);
+  }, 4000);
   setTimeout(() => {
     setAlert(false);
   }, 4000);
@@ -96,6 +100,17 @@ export default function Home() {
         {alert ? (
           <Alert style={{ margin: "20px" }} variant="outlined" severity="error">
             PLEASE SIGNIN OR LOGIN TO BUY THIS COURSE. THANKYOU
+          </Alert>
+        ) : (
+          <></>
+        )}
+        {buy ? (
+          <Alert
+            style={{ margin: "20px" }}
+            variant="outlined"
+            severity="success"
+          >
+            Course Purchased. THANKYOU
           </Alert>
         ) : (
           <></>

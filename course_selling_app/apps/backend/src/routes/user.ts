@@ -63,7 +63,7 @@ router.post("/purchaseCourse/:courseId", auth, async (req, res) => {
     if (user) {
       user.purchasedCourses.push(course);
       user.save();
-      res.send("Course Successfully purchased");
+      res.send({message:true});
     } else res.status(403).send("user not found");
   } else res.send("course not found");
 });
