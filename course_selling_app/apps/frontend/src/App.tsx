@@ -5,7 +5,7 @@ import Appbar from "./components/Appbar";
 import Home from "./components/Home";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
-
+import PurchasedCourses from "./components/PurchasedCourses";
 export default function App() {
   return (
     <RecoilRoot>
@@ -13,6 +13,7 @@ export default function App() {
         <Appbar />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/purchasedCourses" element={<PurchasedCourses />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
         </Routes>

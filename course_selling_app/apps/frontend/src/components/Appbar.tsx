@@ -32,16 +32,18 @@ export default function Appbar() {
             Home
           </Button>
         </Link>
-        <Button
-          variant="contained"
-          style={{
-            backgroundColor: "white",
-            color: "black",
-            marginRight: "5px",
-          }}
-        >
-          Courses
-        </Button>
+        <Link to={"/purchasedCourses"}>
+          <Button
+            variant="contained"
+            style={{
+              backgroundColor: "white",
+              color: "black",
+              marginRight: "5px",
+            }}
+          >
+            Courses
+          </Button>
+        </Link>
       </div>
       <div>
         {user ? (

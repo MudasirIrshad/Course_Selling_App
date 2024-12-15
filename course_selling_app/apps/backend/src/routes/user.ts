@@ -72,7 +72,7 @@ router.get("/purchasedCourses", auth, async (req, res) => {
     "purchasedCourses"
   );
   if (find) {
-    res.send({ purchasedCourses: find.purchasedCourses });
+    res.send({ courses: find.purchasedCourses });
   } else res.send("no course found");
 });
 
