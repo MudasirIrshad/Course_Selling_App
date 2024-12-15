@@ -26,7 +26,9 @@ export default function Home() {
   }, []);
   console.log(courses.map((course) => course._id));
   const handleClick = () => {
-    setAlert(true);
+    if (!localStorage.getItem('Token')) {
+      setAlert(true);
+    }
   };
   setTimeout(() => {
     setAlert(false);

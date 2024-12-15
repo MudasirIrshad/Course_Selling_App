@@ -27,7 +27,7 @@ router.post("/signup", async (req, res) => {
     });
     await newUser.save();
     let token = jwt.sign({ username, gmail }, SECRET_KEY);
-    res.send({ message: "User Signup Token", token });
+    res.send({ message: true, token });
   }
 });
 

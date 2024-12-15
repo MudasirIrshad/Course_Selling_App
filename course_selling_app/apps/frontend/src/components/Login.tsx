@@ -2,10 +2,12 @@ import { Box, Button, TextField } from "@mui/material";
 import { BASE_URL } from "@repo/ui/ui";
 import axios from "axios";
 import React, { useState } from "react";
-import { User } from "@repo/common/config";
 import { useNavigate } from "react-router-dom";
+import { useSetRecoilState } from "recoil";
+import { userState } from "../store/user";
 
 export default function Login() {
+  const setUserState = useSetRecoilState(userState);
   const navigate = useNavigate();
   const handleClick = async () => {
     const res = await axios.post(
@@ -24,7 +26,9 @@ export default function Login() {
     const data = res.data;
     if (data.message == true) {
       navigate("/");
-      localStorage.setItem("JWT Token",data.token)
+      localStorage.setItem("Token", data.token);
+
+      if (localStorage.getItem("Token")) setUserState(true);
     }
   };
   const [username, setUsername] = useState("");
