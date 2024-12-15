@@ -42,7 +42,7 @@ router.post("/login", async (req, res) => {
   let find = await User.findOne({ gmail, username, password });
   if (find) {
     let token = jwt.sign({ username, gmail }, SECRET_KEY);
-    res.send({ message: "User Login Token", token });
+    res.send({ message: true, token });
   } else res.send("Please Signin first. thankyou");
 });
 

@@ -35,9 +35,19 @@ export default function Appbar() {
       <div>
         <Button
           variant="contained"
+          style={{
+            backgroundColor: "white",
+            color: "black",
+            marginRight: "5px",
+          }}
+        >
+          <Link to={"/login"}>Login</Link>
+        </Button>
+        <Button
+          variant="contained"
           style={{ backgroundColor: "white", color: "black" }}
         >
-          Home
+          <Link to={"/signup"}>Signup</Link>
         </Button>
       </div>
     </div>

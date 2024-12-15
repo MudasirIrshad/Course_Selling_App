@@ -1,5 +1,5 @@
 import express from "express";
-import { Admin, Course } from "../database/index";
+import { Admin, Course, User } from "../database/index";
 import * as jwt from "jsonwebtoken";
 import { SECRET_KEY } from "../middleware/index";
 import { AdminZodSchema } from "@repo/common/config";
@@ -83,6 +83,11 @@ router.get("/viewAllCourses", auth, async (req, res) => {
   else {
     res.send({ courses: find });
   }
+});
+router.get("/viewUsers", async (req, res) => {
+  let find = await User.find();
+  if (!find) res.send("No users found");
+  res.send(find);
 });
 router.put("/editCourse/:courseId", auth, async (req, res) => {
   const courseId = req.params.courseId;
