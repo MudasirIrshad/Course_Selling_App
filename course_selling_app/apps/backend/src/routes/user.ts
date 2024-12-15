@@ -4,9 +4,9 @@ import * as jwt from "jsonwebtoken";
 import { SECRET_KEY } from "../middleware/index";
 import { UserZodSchema } from "@repo/common/config";
 import { auth } from "../middleware/index";
-import cors  from "cors";
-const app = express()
-app.use(cors())
+import cors from "cors";
+const app = express();
+app.use(cors());
 const router = express.Router();
 
 router.post("/signup", async (req, res) => {
@@ -54,6 +54,7 @@ router.get("/courses", async (req, res) => {
 
 router.post("/purchaseCourse/:courseId", auth, async (req, res) => {
   const courseId = req.params.courseId;
+
   const course = await Course.findById(courseId);
   let username = req.user.username;
 

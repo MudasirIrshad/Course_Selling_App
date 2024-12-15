@@ -10,7 +10,6 @@ export default function Appbar() {
     setUserState(false);
     localStorage.clear();
   };
-  if (localStorage.getItem("Token")) setUserState(true);
   return (
     <div
       style={{
@@ -21,16 +20,18 @@ export default function Appbar() {
       }}
     >
       <div>
-        <Button
-          variant="contained"
-          style={{
-            backgroundColor: "white",
-            color: "black",
-            marginRight: "5px",
-          }}
-        >
-          <Link to={"/"}>Home</Link>
-        </Button>
+        <Link to={"/"}>
+          <Button
+            variant="contained"
+            style={{
+              backgroundColor: "white",
+              color: "black",
+              marginRight: "5px",
+            }}
+          >
+            Home
+          </Button>
+        </Link>
         <Button
           variant="contained"
           style={{
@@ -59,22 +60,26 @@ export default function Appbar() {
           </>
         ) : (
           <>
-            <Button
-              variant="contained"
-              style={{
-                backgroundColor: "white",
-                color: "black",
-                marginRight: "5px",
-              }}
-            >
-              <Link to={"/login"}>Login</Link>
-            </Button>
-            <Button
-              variant="contained"
-              style={{ backgroundColor: "white", color: "black" }}
-            >
-              <Link to={"/signup"}>Signup</Link>
-            </Button>
+            <Link to={"/login"}>
+              <Button
+                variant="contained"
+                style={{
+                  backgroundColor: "white",
+                  color: "black",
+                  marginRight: "5px",
+                }}
+              >
+                Login
+              </Button>
+            </Link>
+            <Link to={"/signup"}>
+              <Button
+                variant="contained"
+                style={{ backgroundColor: "white", color: "black" }}
+              >
+                Signup
+              </Button>
+            </Link>
           </>
         )}
       </div>

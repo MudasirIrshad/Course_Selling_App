@@ -24,12 +24,31 @@ export default function Home() {
       })
       .catch((err) => console.log("err"));
   }, []);
-  console.log(courses.map((course) => course._id));
-  const handleClick = () => {
-    if (!localStorage.getItem('Token')) {
+
+  async function handleClick(courseId) {
+    console.log(localStorage.getItem('Token'));
+    
+    if (!localStorage.getItem("Token")) {
       setAlert(true);
     }
-  };
+    console.log(courseId);
+    await axios
+      .post(
+        `${BASE_URL}/user/purchaseCourse/${courseId}`,
+        {},
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("Token"),
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
   setTimeout(() => {
     setAlert(false);
   }, 4000);
@@ -61,7 +80,9 @@ export default function Home() {
                     {course.price}
                   </Typography>
                   <Button
-                    onClick={handleClick}
+                    onClick={() => {
+                      handleClick(course._id);
+                    }}
                     variant="contained"
                     style={{ backgroundColor: "black", color: "white" }}
                   >
