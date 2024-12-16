@@ -1,4 +1,11 @@
-import { Box, Button, TextField } from "@mui/material";
+import {
+  Box,
+  Button,
+  Radio,
+  RadioGroup,
+  Switch,
+  TextField,
+} from "@mui/material";
 import { BASE_URL } from "@repo/ui/ui";
 import axios from "axios";
 import React, { useState } from "react";
@@ -7,33 +14,61 @@ import { useSetRecoilState } from "recoil";
 import { userState } from "../store/user";
 
 export default function Login() {
-  const setUserState = useSetRecoilState(userState);
+  const [checked, setChecked] = useState(false);
+  const [adminKey, setAdminKey] = useState("");
   const navigate = useNavigate();
-  const handleClick = async () => {
-    const res = await axios.post(
-      `${BASE_URL}/user/login`,
-      {
-        username,
-        gmail,
-        password,
-      },
-      {
-        headers: {
-          "Content-type": "application/json",
-        },
-      }
-    );
-    const data = res.data;
-    if (data.message == true) {
-      navigate("/");
-      localStorage.setItem("Token", data.token);
-
-      if (localStorage.getItem("Token")) setUserState(true);
-    }
-  };
   const [username, setUsername] = useState("");
   const [gmail, setGmail] = useState("");
   const [password, setPassword] = useState("");
+  const handleClick = async () => {
+    if (adminKey == "admin key") {
+      const res = await axios.post(
+        `${BASE_URL}/admin/login`,
+        {
+          adminname: username,
+          gmail,
+          password,
+        },
+        {
+          headers: {
+            "Content-type": "application/json",
+          },
+        }
+      );
+      const data = res.data;
+      if (data.message == "admin") {
+        navigate("/");
+        localStorage.setItem("Token", data.token);
+        localStorage.setItem("message", data.message);
+      }
+    } else {
+      const res = await axios.post(
+        `${BASE_URL}/user/login`,
+        {
+          username,
+          gmail,
+          password,
+        },
+        {
+          headers: {
+            "Content-type": "application/json",
+          },
+        }
+      );
+      const data = res.data;
+      console.log(data);
+
+      if (data.message == "user") {
+        navigate("/");
+        localStorage.setItem("Token", data.token);
+        localStorage.setItem("message", data.message);
+      }
+    }
+  };
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setChecked(event.target.checked);
+    console.log(checked);
+  };
 
   return (
     <div style={{ display: "flex", justifyContent: "center" }}>
@@ -77,6 +112,32 @@ export default function Login() {
             setPassword(e.target.value);
           }}
         />
+
+        <div style={{ width: "350px", margin: "10px" }}>
+          <p>Admin</p>
+          <Switch
+            checked={checked}
+            onChange={handleChange}
+            inputProps={{ "aria-label": "controlled" }}
+          />
+        </div>
+        <div>
+          {checked ? (
+            <>
+              <TextField
+                required
+                style={{ padding: "10px", width: "350px" }}
+                id="outlined-required"
+                label="Admin-Secret-Key"
+                onChange={(e) => {
+                  setAdminKey(e.target.value);
+                }}
+              />
+            </>
+          ) : (
+            <></>
+          )}
+        </div>
         <Button
           sx={{ backgroundColor: "black", width: "350px", margin: "10px" }}
           variant="contained"

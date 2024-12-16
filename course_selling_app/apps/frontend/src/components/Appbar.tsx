@@ -1,15 +1,24 @@
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
-import { useSetRecoilState, useRecoilValue } from "recoil";
-
-import { userState } from "../store/user";
+import { useEffect, useState } from "react";
 export default function Appbar() {
-  const setUserState = useSetRecoilState(userState);
-  const user = useRecoilValue(userState);
+  const [usertoken, setUserToken] = useState(false);
+  const [admintoken, setAdminToken] = useState(false);
   const handleClick = () => {
-    setUserState(false);
+    setUserToken(false);
+    setAdminToken(false);
     localStorage.clear();
   };
+  useEffect(() => {
+    if (localStorage.getItem("message") == "user") {
+      setUserToken(true);
+    }
+  }, [usertoken]);
+  useEffect(() => {
+    if (localStorage.getItem("message") == "admin") {
+      setAdminToken(true);
+    }
+  }, [usertoken]);
   return (
     <div
       style={{
@@ -32,21 +41,45 @@ export default function Appbar() {
             Home
           </Button>
         </Link>
-        <Link to={"/purchasedCourses"}>
-          <Button
-            variant="contained"
-            style={{
-              backgroundColor: "white",
-              color: "black",
-              marginRight: "5px",
-            }}
-          >
-            Courses
-          </Button>
-        </Link>
+        {admintoken ? (
+          <>
+            <Link to={"/viewAllCourses"}>
+              <Button
+                variant="contained"
+                style={{
+                  backgroundColor: "white",
+                  color: "black",
+                  marginRight: "5px",
+                }}
+              >
+                Courses
+              </Button>
+            </Link>
+          </>
+        ) : (
+          <></>
+        )}
+        {usertoken ? (
+          <>
+            <Link to={"/purchasedCourses"}>
+              <Button
+                variant="contained"
+                style={{
+                  backgroundColor: "white",
+                  color: "black",
+                  marginRight: "5px",
+                }}
+              >
+                Courses
+              </Button>
+            </Link>
+          </>
+        ) : (
+          <></>
+        )}
       </div>
       <div>
-        {user ? (
+        {usertoken || admintoken ? (
           <>
             <Button
               variant="contained"

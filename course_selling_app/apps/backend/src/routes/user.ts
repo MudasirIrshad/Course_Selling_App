@@ -27,7 +27,7 @@ router.post("/signup", async (req, res) => {
     });
     await newUser.save();
     let token = jwt.sign({ username, gmail }, SECRET_KEY);
-    res.send({ message: true, token });
+    res.send({ message: 'user', token });
   }
 });
 
@@ -42,7 +42,7 @@ router.post("/login", async (req, res) => {
   let find = await User.findOne({ gmail, username, password });
   if (find) {
     let token = jwt.sign({ username, gmail }, SECRET_KEY);
-    res.send({ message: true, token });
+    res.send({ message: 'user', token });
   } else res.send("Please Signin first. thankyou");
 });
 

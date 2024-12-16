@@ -41,7 +41,7 @@ router.post("/login", async (req, res) => {
   let findAdmin = await Admin.findOne({ gmail, adminname, password });
   if (findAdmin) {
     let token = jwt.sign({ adminname, gmail }, SECRET_KEY);
-    res.send({ message: "Admin Login Token", token });
+    res.send({ message: "admin", token });
   } else res.send("Please Signin first. thankyou");
 });
 
